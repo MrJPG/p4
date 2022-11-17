@@ -3,4 +3,4 @@ project(p4 C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(p4 p4.c)
+add_executable(p4 p4.c monticulo.c monticulo.h)

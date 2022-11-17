@@ -1,16 +1,19 @@
-//
-// Created by alex on 17/11/22.
-//
+#include <stdbool.h>
 
 #ifndef P4_MONTICULO_H
 #define P4_MONTICULO_H
 
 #endif //P4_MONTICULO_H
 
-#define TAM 512000
+#define TMAX 512000
+
 typedef struct {
-    int vector[TAM];
-    int ultimo;
+    int vector[TMAX];
+    int tamanhoMont;
 } monticulo;
-void crear_monticulo(int [], int, monticulo *);
-int eliminar_mayor(monticulo *);
+
+void init_monticulo(monticulo *m);
+bool esMonticuloVacio(monticulo m);
+void insert (int a, monticulo *m);
+void crear_monticulo(const int [], int, monticulo *m);
+int eliminar_mayor(monticulo *m);

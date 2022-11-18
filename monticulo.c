@@ -70,3 +70,12 @@ int eliminar_mayor(monticulo *m){
         return x;
     }
 }
+
+void ord_monticulos(int v[], int n){
+    monticulo mc;
+    int i;
+    crear_monticulo(v, n, &mc);
+    for (i = n; i > 0; --i) {
+        v[i-1] = eliminar_mayor(&mc);
+    }
+}

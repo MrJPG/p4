@@ -5,7 +5,7 @@
 
 #endif //P4_MONTICULO_H
 
-#define TMAX 512000
+#define TMAX 256000
 
 typedef struct {
     int vector[TMAX];
@@ -17,3 +17,4 @@ bool esMonticuloVacio(monticulo m);
 void insert (int a, monticulo *m);
 void crear_monticulo(const int [], int, monticulo *m);
 int eliminar_mayor(monticulo *m);
+void ord_monticulos(int v[], int n);

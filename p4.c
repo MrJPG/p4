@@ -1,20 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #include <sys/time.h>
 #include "monticulo.h"
 
 #define VTEST 10
+#define T 500
+#define K 1000
 
 void inicializar_semilla();
 double microsegundos();
 void randVector(int v [], int n);
 void vectorAsc(int v [], int n);
 void test();
+void exeCreateMont();
+void cotasCreateMont(double t, int n);
 
 
 int main() {
+    inicializar_semilla();
     test();
+    exeCreateMont();
     return 0;
 }
 
@@ -31,17 +38,55 @@ double microsegundos() {
     return (t.tv_usec + t.tv_sec * 1000000.0);
 }
 
+
 void randVector(int v [], int n) {   /* se generan números pseudoaleatorio entre -n y +n */
     int i, m=2*n+1;
     for (i=0; i < n; i++)
         v[i] = (rand() % m) - n;
 }
 
+
 void vectorAsc(int v [], int n) {
     int i;
     for (i=0; i < n; i++)
         v[i] = i;
 }
+
+
+void exeCreateMont(){
+    monticulo m1;
+    double ta, tb, t;
+    int i, n, aux[256000]={0};
+    printf("\nAnalisis de crear_monticulo() con n elementos:");
+    printf("\n%11s%14s%14s%14s%14s","n","t(n)","t(n)/log(n)","t(n)/n","t(n)/n^1.2\n");
+    for (n = 500; n <= 256000; n *= 2) {
+        vectorAsc(aux, n);
+        ta = microsegundos();
+        crear_monticulo(aux, n, &m1);
+        tb = microsegundos();
+        t = tb - ta;
+        if(t < T){
+            ta = microsegundos();
+            for(i = 0; i < K; i++){
+                crear_monticulo(aux, n, &m1);
+            }
+            tb = microsegundos();
+            t = (tb - ta)/K;
+            printf("  * ");
+        }
+        else printf("    ");
+        cotasCreateMont(t, n);
+    }
+    printf("\n");
+}
+
+
+void cotasCreateMont(double t, int n) {
+    double ci, ca, cs;
+    ci = log(n), ca = n, cs = pow(n, 1.2);
+    printf("%7d%14.3f%14.3f%14.4f%14.5f\n", n, t, t / ci, t / ca, t / cs);
+}
+
 
 void test(){
     monticulo m1;
@@ -55,6 +100,11 @@ void test(){
     printf("\nDistribucion de los elementos del monticulo:\n\t");
     for (i = 0; i < m1.tamanhoMont; ++i) {
         printf("%4d", m1.vector[i]);
+    }
+    ord_monticulos(v, VTEST);
+    printf("\nOrdenacion del monticulo en un vector:\n\t");
+    for (i = 0; i < m1.tamanhoMont; ++i) {
+        printf("%4d", v[i]);
     }
     for (i = VTEST; i > 0 ; --i) {
         eliminar_mayor(&m1);

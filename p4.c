@@ -4,10 +4,12 @@
 #include <sys/time.h>
 #include "monticulo.h"
 
+#define VTEST 10
 
 void inicializar_semilla();
 double microsegundos();
 void randVector(int v [], int n);
+void vectorAsc(int v [], int n);
 void test();
 
 
@@ -35,20 +37,32 @@ void randVector(int v [], int n) {   /* se generan números pseudoaleatorio entr
         v[i] = (rand() % m) - n;
 }
 
+void vectorAsc(int v [], int n) {
+    int i;
+    for (i=0; i < n; i++)
+        v[i] = i;
+}
 
 void test(){
     monticulo m1;
-    int v[15] = {8, 7, 23, 11, 0, 5, 5, 3, 9, 10, 1, 26, 9, 2, 3};
-    int n = 15;
-    crear_monticulo(v, n, &m1);
-    for (int i = 0; i < 15; ++i) {
+    int v[VTEST] = {0}, i, j;
+    randVector(v, VTEST);
+    printf("\nVector con el que formar el monticulo:\n\t");
+    for (i = 0; i < VTEST; ++i) {
+        printf("%4d", v[i]);
+    }
+    crear_monticulo(v, VTEST, &m1);
+    printf("\nDistribucion de los elementos del monticulo:\n\t");
+    for (i = 0; i < m1.tamanhoMont; ++i) {
         printf("%4d", m1.vector[i]);
     }
-    printf("\n");
+    for (i = VTEST; i > 0 ; --i) {
+        eliminar_mayor(&m1);
+        printf("\nMonticulo tras %d eliminaciones:\n\t", VTEST-i+1);
+        for (j = 0; j < m1.tamanhoMont; ++j) {
+            printf("%4d", m1.vector[j]);
+        }
+    }
     eliminar_mayor(&m1);
-    for (int i = 0; i < 14; ++i) {
-        printf("%4d", m1.vector[i]);
-    }
     printf("\n");
-
 }

@@ -38,11 +38,11 @@ void hundir (int i, monticulo *m){
         hIzq = 2 * (i + 1) - 1;
         hDer = 2 * (i + 1);
         j=i;
-        if(hDer <= m->tamanhoMont && m->vector[hDer] > m->vector[i - 1]){
-            i = hDer;
-        }
-        if(hIzq <= m->tamanhoMont && m->vector[hIzq] > m->vector[i - 1]){
+        if(hIzq <= m->tamanhoMont && m->vector[hIzq] > m->vector[i]){
             i = hIzq;
+        }
+        if(hDer <= m->tamanhoMont && m->vector[hDer] > m->vector[i]){
+            i = hDer;
         }
         intercambiar(&m->vector[j], &m->vector[i]);
     } while (i!=j);
@@ -50,12 +50,12 @@ void hundir (int i, monticulo *m){
 
 void crear_monticulo(const int v[], int nElem, monticulo *m){
     int i;
-    for(i=0; i < nElem-1; i++){
+    for(i=0; i < nElem; i++){
         m->vector[i] = v[i];
     }
     m->tamanhoMont = nElem;
-    for (i = m->tamanhoMont; i == 1; --i) {
-        hundir(i, m);
+    for (i = m->tamanhoMont/2; i >= 1; --i) {
+        hundir(i-1, m);
     }
 }
 
@@ -66,7 +66,7 @@ int eliminar_mayor(monticulo *m){
         x = m->vector[0];
         m->vector[0] = m->vector[m->tamanhoMont - 1];
         m->tamanhoMont = m->tamanhoMont - 1;
-        if (m->tamanhoMont > 0) hundir(1, m);
+        if (m->tamanhoMont >= 0) hundir(0, m);
         return x;
     }
 }

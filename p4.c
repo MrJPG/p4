@@ -13,15 +13,22 @@ void inicializar_semilla();
 double microsegundos();
 void randVector(int v [], int n);
 void vectorAsc(int v [], int n);
+void vectorDesc(int v [], int n);
+void printHeader(void(*init)(int v[], int n));
 void test();
 void exeCreateMont();
 void cotasCreateMont(double t, int n);
+void exeOrdenacion(void(*init)(int v[], int n));
+void cotasOrd(void(*init)(int v[], int n), double t, int n);
 
 
 int main() {
     inicializar_semilla();
     test();
     exeCreateMont();
+    exeOrdenacion(vectorAsc);
+    exeOrdenacion(vectorDesc);
+    exeOrdenacion(randVector);
     return 0;
 }
 
@@ -50,6 +57,29 @@ void vectorAsc(int v [], int n) {
     int i;
     for (i=0; i < n; i++)
         v[i] = i;
+}
+
+
+void vectorDesc(int v [], int n) {
+    int i;
+    for (i=0; i < n; i++)
+        v[i] = n-i-1;
+}
+
+
+void printHeader(void(*init)(int v[], int n)){
+    if (init == vectorDesc){
+        printf("\nAnalisis de ord_monticulos() con n elementos ordenados descendentemente:");
+        printf("\n%11s%14s%14s%14s%14s","n","t(n)","t(n)/log(n)","t(n)/n","t(n)/n^1.2\n");
+    }
+    else if (init == randVector){
+        printf("\nAnalisis de ord_monticulos() con n elementos aleatorios:");
+        printf("\n%11s%14s%14s%14s%14s","n","t(n)","t(n)/log(n)","t(n)/n","t(n)/n^1.2\n");
+    }
+    else if (init == vectorAsc){
+        printf("\nAnalisis de ord_monticulos() con n elementos ordenados ascendentemente:");
+        printf("\n%11s%14s%14s%14s%14s","n","t(n)","t(n)/log(n)","t(n)/n","t(n)/n^1.2\n");
+    }
 }
 
 
@@ -85,6 +115,52 @@ void cotasCreateMont(double t, int n) {
     double ci, ca, cs;
     ci = log(n), ca = n, cs = pow(n, 1.2);
     printf("%7d%14.3f%14.3f%14.4f%14.5f\n", n, t, t / ci, t / ca, t / cs);
+}
+
+
+void exeOrdenacion(void(*init)(int v[], int n)){
+    double ta, tb, tc, t;
+    int i, n, aux[64000]={0};
+    printHeader(init);
+    for (n = 500; n <= 64000; n *= 2) {
+        init(aux, n);
+        ta = microsegundos();
+        ord_monticulos(aux, n);
+        tb = microsegundos();
+        t = tb - ta;
+        if(t < T){
+            ta = microsegundos();
+            for(i = 0; i < K; i++){
+                init(aux, n);
+                ord_monticulos(aux, n);
+            }
+            tb = microsegundos();
+            init(aux, n);
+            tc = microsegundos();
+            t = ((tb-ta)-(tc-tb))/K;
+            printf("  * ");
+        }
+        else printf("    ");
+        cotasOrd(init, t, n);
+    }
+    printf("\n");
+}
+
+
+void cotasOrd(void(*init)(int v[], int n), double t, int n) {
+    double ci, ca, cs;
+    if (init == vectorDesc){
+        ci = log(n), ca = n, cs = pow(n, 1.2);
+        printf("%7d%14.3f%14.3f%14.4f%14.5f\n", n, t, t / ci, t / ca, t / cs);
+    }
+    else if (init == randVector){
+        ci = log(n), ca = n, cs = pow(n, 1.2);
+        printf("%7d%14.3f%14.3f%14.4f%14.5f\n", n, t, t / ci, t / ca, t / cs);
+    }
+    else if (init == vectorAsc){
+        ci = log(n), ca = n, cs = pow(n, 1.2);
+        printf("%7d%14.3f%14.3f%14.4f%14.5f\n", n, t, t / ci, t / ca, t / cs);
+    }
 }
 
 

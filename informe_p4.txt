@@ -1,0 +1,22 @@
+ALGORITMOS - PRÁCTICA 4
+AUTOR 1: Alejandro Fernández Otero               LOGIN 1: alejandro.fernandezo
+AUTOR 2: Alejandro Javier Herrero Arango         LOGIN 2: a.j.herrero
+GRUPO: 3.1
+FECHA: 2/12/2022
+
+La práctica fue realizada en ...
+Maquina: Intel® Core™ i5-10210U CPU @ 1.60GHz × 8  (8GiB RAM)
+SO: Fedora Linux 36 (Workstation Edition) LTS x64 (GNOME 42.4)
+Kernel: 6.0.5-200.fc36.x86_64
+
+---------------------------------------------------------------------------------------------
+
+Esta cuarta práctica gira alrededor de operaciones sobre montículos de máximos. En especial 
+nos centramos en implementar crear_monticulo() y eliminar_mayor() para despues analizar la 
+ordenación de montículos (Que usa las dos operaciones anteriores y devuelve un vector de 
+elementos ascendentes) para tres casos distintos: Que los elementos introducidos en el 
+montículo a traves de un vector esten ordenados ascendentemente, descendentemente o de forma 
+aleatoria. Cabe explicar que nuestros montículos están implementados a partir de un struct
+que contiene un vector de elementos y el tamaño total del mismo.
+
+-------------------------------------------------------------------------------------------- 

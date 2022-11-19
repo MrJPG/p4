@@ -5,7 +5,7 @@
 
 #endif //P4_MONTICULO_H
 
-#define TMAX 256000
+#define TMAX 512000
 
 typedef struct {
     int vector[TMAX];

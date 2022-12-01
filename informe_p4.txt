@@ -9,14 +9,89 @@ Maquina: Intel® Core™ i5-10210U CPU @ 1.60GHz × 8  (8GiB RAM)
 SO: Fedora Linux 36 (Workstation Edition) LTS x64 (GNOME 42.4)
 Kernel: 6.0.5-200.fc36.x86_64
 
----------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------
 
 Esta cuarta práctica gira alrededor de operaciones sobre montículos de máximos. En especial 
-nos centramos en implementar crear_monticulo() y eliminar_mayor() para despues analizar la 
+nos centramos en implementar crear_monticulo() y eliminar_mayor(), para despues analizar la 
 ordenación de montículos (Que usa las dos operaciones anteriores y devuelve un vector de 
-elementos ascendentes) para tres casos distintos: Que los elementos introducidos en el 
-montículo a traves de un vector esten ordenados ascendentemente, descendentemente o de forma 
-aleatoria. Cabe explicar que nuestros montículos están implementados a partir de un struct
-que contiene un vector de elementos y el tamaño total del mismo.
+elementos ascendentes) para tres casos distintos: Que el vector de los elementos introducidos
+en el montículo esté ordenado ascendentemente, descendentemente o de forma aleatoria. Cabe 
+explicar que nuestros montículos están implementados a partir de un struct que contiene un 
+vector y un entero que guarda el tamaño total del mismo.
 
--------------------------------------------------------------------------------------------- 
+-----------------------------------------------------------------------------------------------
+
+En primer lugar, se valida el correcto funcionamiento de crear_monticulo(), eliminar_mayor()
+y ord_monticulo() a través de la ejecución de un test en el que se maneja un montículo creado
+a partir de una secuencia de 10 elementos aleatorios entre -10 y 10 (Puede cambiarse facilmente
+al ser una macro definida al comienzo del programa).
+
+Vector con el que formar el monticulo:
+	  -2  -8  -3   8  -1  10 -10  -8   6   1
+Distribucion de los elementos del monticulo:
+	  10   8  -2   6   1  -3 -10  -8  -8  -1
+Ordenacion del monticulo en un vector:
+	 -10  -8  -8  -3  -2  -1   1   6   8  10
+Monticulo tras 1 eliminaciones:
+	   8   6  -2  -1   1  -3 -10  -8  -8
+Monticulo tras 2 eliminaciones:
+	   6   1  -2  -1  -8  -3 -10  -8
+Monticulo tras 3 eliminaciones:
+	   1  -1  -2  -8  -8  -3 -10
+Monticulo tras 4 eliminaciones:
+	  -1  -8  -2 -10  -8  -3
+Monticulo tras 5 eliminaciones:
+	  -2  -8  -3 -10  -8
+Monticulo tras 6 eliminaciones:
+	  -3  -8  -8 -10
+Monticulo tras 7 eliminaciones:
+	  -8 -10  -8
+Monticulo tras 8 eliminaciones:
+	  -8 -10
+Monticulo tras 9 eliminaciones:
+	 -10
+Monticulo tras 10 eliminaciones:
+	ERROR, monticulo vacio
+
+--------------------------------------------------------------------------------------------------
+
+Ahora, como pide el enunciado, se calcula empíricamente la complejidad computacional de ejecutar
+nuestro heapsort creando monticulos a partir de vectores inicialmente ascendentes, descendentes y
+aleatorios de tamaño n, llendo los montículos de tamaño n = 500 a n = 64000 haciendo n = 2*n y
+dando lugar finalmente a tres tablas de tiempos.
+Además, antes de analizar la ordenación, se calculan en una primera tabla los tiempos de
+crear_monticulo(), para vectores ascendentes, con tal de comprobar que su complejidad es de O(n).
+Sin embargo, en este caso la progresión de n alcanza los 256000 elementos, ya que sus tiempos de
+ejecución son, en general, más bajos.
+
+NOTA -> Todas las mediciones de tiempos están expresadas en micro segundos (μs).
+        Para tiempos menores a 500μs se hace la medición en 1000 veces distintas y se halla la media (*).
+        Tomamos como n máximo del heapsort 64000 porque resulta una operación muy costosa y asi se
+        evita esperar demasiado tiempo a su ejecución.
+
+--------------------------------------------------------------------------------------------------
+
+Analisis de crear_monticulo() con n elementos:
+          n          t(n)   t(n)/log(n)        t(n)/n   t(n)/n^1.2
+  *     500         8.397         1.351        0.0168       0.00485
+  *    1000        15.470         2.240        0.0155       0.00389
+  *    2000        30.433         4.004        0.0152       0.00333
+  *    4000        54.524         6.574        0.0136       0.00259
+  *    8000       104.538        11.632        0.0131       0.00217
+  *   16000       207.648        21.450        0.0130       0.00187
+  *   32000       406.349        39.172        0.0127       0.00159
+      64000       850.000        76.807        0.0133       0.00145
+     128000      1740.000       147.962        0.0136       0.00129
+     256000      3484.000       279.773        0.0136       0.00113
+
+Cota subestimada = log(n)
+Cota sobrestimada = n
+Cota ajustada = n^1.2
+
+---OBSERVACIONES---
+  - El cociente entre nuestros tiempos y la cota subestimada es
+      estrictamente creciente
+  - El cociente entre nuestros tiempos y la cota sobrestimada es
+      estrictamente decreciente
+  - El cociente entre nuestros tiempos y la cota ajustada se sitúa próximo a un valor de 0.013.
+

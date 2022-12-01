@@ -150,15 +150,15 @@ void exeOrdenacion(void(*init)(int v[], int n)){
 void cotasOrd(void(*init)(int v[], int n), double t, int n) {
     double ci, ca, cs;
     if (init == vectorDesc){
-        ci = log(n), ca = n, cs = pow(n, 1.2);
+        ci = n*log(n), ca = n, cs = pow(n, 1.2);
         printf("%7d%14.3f%14.3f%14.4f%14.5f\n", n, t, t / ci, t / ca, t / cs);
     }
     else if (init == randVector){
-        ci = log(n), ca = n, cs = pow(n, 1.2);
+        ci = n*log(n), ca = n, cs = pow(n, 1.2);
         printf("%7d%14.3f%14.3f%14.4f%14.5f\n", n, t, t / ci, t / ca, t / cs);
     }
     else if (init == vectorAsc){
-        ci = log(n), ca = n, cs = pow(n, 1.2);
+        ci = n*log(n), ca = n, cs = pow(n, 1.2);
         printf("%7d%14.3f%14.3f%14.4f%14.5f\n", n, t, t / ci, t / ca, t / cs);
     }
 }

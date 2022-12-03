@@ -61,7 +61,7 @@ void crear_monticulo(const int v[], int nElem, monticulo *m){
 
 int eliminar_mayor(monticulo *m){
     int x;
-    if (esMonticuloVacio(*m)) printf("ERROR, monticulo vacio");
+    if (m->tamanhoMont == 0) printf("ERROR, monticulo vacio");
     else{
         x = m->vector[0];
         m->vector[0] = m->vector[m->tamanhoMont - 1];
@@ -69,6 +69,7 @@ int eliminar_mayor(monticulo *m){
         if (m->tamanhoMont >= 0) hundir(0, m);
         return x;
     }
+    return -1;
 }
 
 void ord_monticulos(int v[], int n){

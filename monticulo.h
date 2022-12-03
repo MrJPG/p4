@@ -1,11 +1,6 @@
 #include <stdbool.h>
 
-#ifndef P4_MONTICULO_H
-#define P4_MONTICULO_H
-
-#endif //P4_MONTICULO_H
-
-#define TMAX 512000
+#define TMAX 512001
 
 typedef struct {
     int vector[TMAX];

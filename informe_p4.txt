@@ -90,6 +90,7 @@ Cota ajustada = n^1.2
   - El cociente entre nuestros tiempos y la cota sobrestimada es
       estrictamente decreciente
   - El cociente entre nuestros tiempos y la cota ajustada se sitúa próximo a un valor de 0.013.
+  - Queda comprobado empíricamente que la operación crear_monticulo() se ejecuta en un tiempo O(n).
 
 
 
@@ -175,24 +176,12 @@ Cota ajustada = n*log(n)
 --------------------------------------------------------------------------------------------------
 
 ---CONCLUSIONES---
-Queda comprobado empíricamente que la operación crear_monticulo() se ejecuta en un tiempo O(n), 
-esto se debe a varios motivos. Primero, hundir() toma iun tiempo distinto para cada nodo,
-ya que depende de la altura del monticulo en ese momento, que toma un valor log(n), siendo n el
-número de nodos en esa altura. A su vez, el número máximo de nodos a una altura h se calcula como
-el número total de nodos entre 2^(h+1).
-Por tanto, la complejidad temporal se calcula como el sumatorio de h=0 hasta h=log(n) del número
-de nodos a una altura h por O(h), resultando una t(n) = O(n).
-
-(NOTA -> Esta explicación creemos que no es necesaria, ya que solo se pide la comprobación pero,
-la añadimos tras buscar información en Internet y, honestamente no llegamos a asimilar la explicación
-al completo)
-
-Por otra parte, ordenar_monticulo(), o heapsort, tiene una complejidad computaional de O(nlog(n)).
-Sin embargo, a pesar de ser algo superior a una complejidad lineal, tiene la ventaja frente a otras
-ordenaciones de que no hay que preocuparse de cual sea la situacion inicial del montículo, ya que es
-igual de costoso para las tres inicializaciones posibles. Cabe destacar que la implementación usada
-es bastante óptima ya que usa el mismo vector para introducir elementos que para ordenarlos a la vez
-que se elimina el mayor del montículo. 
+Finalmente, se determina que ordenar_monticulo(), o heapsort, tiene una complejidad computaional
+de O(nlog(n)). Sin embargo, a pesar de ser algo superior a una complejidad lineal, tiene la ventaja
+frente a otras ordenaciones de que no hay que preocuparse de cual sea la situacion inicial del
+montículo, ya que es igual de costoso para las tres inicializaciones posibles. Cabe destacar que la
+implementación usada es bastante óptima ya que usa el mismo vector para introducir elementos que para
+ordenarlos a la vez que se elimina el mayor del montículo.
 
 En general, tanto la creación de montículos como la ordenación de los elementos de uno dado, resultan
 ser operaciones no muy costosas, y gran parte de su curva de complejidad viene dada por otras funciones

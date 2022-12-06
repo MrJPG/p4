@@ -68,17 +68,22 @@ void vectorDesc(int v [], int n) {
 
 void printHeader(void(*init)(int v[], int n)){
     if (init == vectorDesc){
-        printf("\nAnalisis de ord_monticulos() con n elementos ordenados descendentemente:");
-        printf("\n%11s%14s%14s%17s%15s","n","t(n)","t(n)/n","t(n)/n*log(n)","t(n)/n^1.4\n");
+        printf("\nORD_MONTICULO() con n elementos ordenados descendentemente:");
     }
     else if (init == randVector){
-        printf("\nAnalisis de ord_monticulos() con n elementos aleatorios:");
-        printf("\n%11s%14s%14s%17s%15s","n","t(n)","t(n)/n","t(n)/n*log(n)","t(n)/n^1.4\n");
+        printf("\nORD_MONTICULO() con n elementos aleatorios:");
     }
     else if (init == vectorAsc){
-        printf("\nAnalisis de ord_monticulos() con n elementos ordenados ascendentemente:");
-        printf("\n%11s%14s%14s%17s%15s","n","t(n)","t(n)/n","t(n)/n*log(n)","t(n)/n^1.4\n");
+        printf("\nORD_MONTICULO() con n elementos ordenados ascendentemente:");
     }
+    printf("\n%11s%14s%14s%17s%15s","n","t(n)","t(n)/n","t(n)/n*log(n)","t(n)/n^1.4\n");
+}
+
+
+void cotasCreateMont(double t, int n) {
+    double ci, ca, cs;
+    ci = log(n), ca = n, cs = pow(n, 1.2);
+    printf("%7d%14.3f%14.3f%14.4f%14.5f\n", n, t, t / ci, t / ca, t / cs);
 }
 
 
@@ -86,7 +91,7 @@ void exeCreateMont(){
     monticulo m1;
     double ta, tb, t;
     int i, n, aux[TMAX]={0};
-    printf("\nAnalisis de crear_monticulo() con n elementos:");
+    printf("\nCREAR_MONTICULO() con n elementos (Ordenados ascendentemente:");
     printf("\n%11s%14s%14s%14s%15s","n","t(n)","t(n)/log(n)","t(n)/n","t(n)/n^1.2\n");
     for (n = 500; n <= TMAX; n *= 2) {
         vectorAsc(aux, n);
@@ -107,13 +112,6 @@ void exeCreateMont(){
         cotasCreateMont(t, n);
     }
     printf("\n");
-}
-
-
-void cotasCreateMont(double t, int n) {
-    double ci, ca, cs;
-    ci = log(n), ca = n, cs = pow(n, 1.2);
-    printf("%7d%14.3f%14.3f%14.4f%14.5f\n", n, t, t / ci, t / ca, t / cs);
 }
 
 
